@@ -31,4 +31,12 @@ public class ProductRepository {
         productData.removeIf(product -> product.getProductId().equals(productId));
     }
 
+    public void update(Product updatedProduct) {
+        for (int i = 0; i < productData.size(); i++) {
+            if (productData.get(i).getProductId().equals(updatedProduct.getProductId())) {
+                productData.set(i, updatedProduct);
+                return;
+            }
+        }
+    }
 }
