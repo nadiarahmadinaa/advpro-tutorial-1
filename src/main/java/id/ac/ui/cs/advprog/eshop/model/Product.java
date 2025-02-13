@@ -16,3 +16,4 @@ public class Product {
         this.productId = UUID.randomUUID().toString();
     }
 }
+
