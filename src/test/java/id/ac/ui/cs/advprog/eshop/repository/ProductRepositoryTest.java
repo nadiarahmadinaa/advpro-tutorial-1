@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,5 +62,60 @@ public class ProductRepositoryTest {
         savedProduct = productIterator.next();
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testUpdateProduct_Success() {
+        Product product = new Product();
+        product.setProductId("789");
+        product.setProductName("Tablet");
+        product.setProductQuantity(15);
+        productRepository.create(product);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("789");
+        updatedProduct.setProductName("Updated Tablet");
+        updatedProduct.setProductQuantity(20);
+
+        productRepository.update(updatedProduct);
+
+        Optional<Product> foundProduct = productRepository.findById("789");
+
+        assertTrue(foundProduct.isPresent());
+        assertEquals("Updated Tablet", foundProduct.get().getProductName());
+        assertEquals(20, foundProduct.get().getProductQuantity());
+    }
+
+    @Test
+    void testUpdateProduct_Failure_ProductNotFound() {
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("999");
+        updatedProduct.setProductName("Non-existent");
+        updatedProduct.setProductQuantity(10);
+
+        productRepository.update(updatedProduct);
+
+        Optional<Product> foundProduct = productRepository.findById("999");
+        assertFalse(foundProduct.isPresent());  // Update should have no effect
+    }
+
+    @Test
+    void testDeleteProduct_Success() {
+        Product product = new Product();
+        product.setProductId("101");
+        product.setProductName("Headphones");
+        product.setProductQuantity(8);
+        productRepository.create(product);
+
+        productRepository.deleteById("101");
+
+        Optional<Product> foundProduct = productRepository.findById("101");
+        assertFalse(foundProduct.isPresent());  // Product should be deleted
+    }
+
+    @Test
+    void testDeleteProduct_Failure_ProductNotFound() {
+        productRepository.deleteById("999");  // No product with ID "999"
+        assertFalse(productRepository.findById("999").isPresent());  // Still should not exist
     }
 }
