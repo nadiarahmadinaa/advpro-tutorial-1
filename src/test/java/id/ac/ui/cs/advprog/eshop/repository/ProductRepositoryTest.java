@@ -20,6 +20,7 @@ public class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        productRepository = new ProductRepository();
     }
 
     @Test
@@ -29,12 +30,14 @@ public class ProductRepositoryTest {
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
         productRepository.create(product);
+
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
+
         Product savedProduct = productIterator.next();
-        assertEquals(savedProduct.getProductId(), product.getProductId());
-        assertEquals(savedProduct.getProductName(), product.getProductName());
-        assertEquals(savedProduct.getProductQuantity(), product.getProductQuantity());
+        assertEquals(product.getProductId(), savedProduct.getProductId());
+        assertEquals(product.getProductName(), savedProduct.getProductName());
+        assertEquals(product.getProductQuantity(), savedProduct.getProductQuantity());
     }
 
     @Test
@@ -50,18 +53,42 @@ public class ProductRepositoryTest {
         product1.setProductName("Sampo Cap Bambang");
         product1.setProductQuantity(100);
         productRepository.create(product1);
+
         Product product2 = new Product();
         product2.setProductId("a0f9de45-90b1-437d-a0bf-d0821dde9096");
         product2.setProductName("Sampo Cap Usep");
         product2.setProductQuantity(50);
         productRepository.create(product2);
+
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
+
         Product savedProduct = productIterator.next();
         assertEquals(product1.getProductId(), savedProduct.getProductId());
+
         savedProduct = productIterator.next();
         assertEquals(product2.getProductId(), savedProduct.getProductId());
+
         assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testFindById_Success() {
+        Product product = new Product();
+        product.setProductId("123");
+        product.setProductName("Keyboard");
+        product.setProductQuantity(5);
+        productRepository.create(product);
+
+        Optional<Product> foundProduct = productRepository.findById("123");
+        assertTrue(foundProduct.isPresent());
+        assertEquals(product.getProductId(), foundProduct.get().getProductId());
+    }
+
+    @Test
+    void testFindById_Failure() {
+        Optional<Product> foundProduct = productRepository.findById("999");
+        assertFalse(foundProduct.isPresent());
     }
 
     @Test
@@ -96,7 +123,7 @@ public class ProductRepositoryTest {
         productRepository.update(updatedProduct);
 
         Optional<Product> foundProduct = productRepository.findById("999");
-        assertFalse(foundProduct.isPresent());  // Update should have no effect
+        assertFalse(foundProduct.isPresent());
     }
 
     @Test
@@ -110,12 +137,54 @@ public class ProductRepositoryTest {
         productRepository.deleteById("101");
 
         Optional<Product> foundProduct = productRepository.findById("101");
-        assertFalse(foundProduct.isPresent());  // Product should be deleted
+        assertFalse(foundProduct.isPresent());
     }
 
     @Test
     void testDeleteProduct_Failure_ProductNotFound() {
-        productRepository.deleteById("999");  // No product with ID "999"
-        assertFalse(productRepository.findById("999").isPresent());  // Still should not exist
+        productRepository.deleteById("999");
+        assertFalse(productRepository.findById("999").isPresent());
+    }
+
+    @Test
+    void testUpdateProduct_WhenMultipleProducts_OnlyCorrectOneUpdated() {
+        Product product1 = new Product();
+        product1.setProductId("001");
+        product1.setProductName("Laptop");
+        product1.setProductQuantity(10);
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product2.setProductId("002");
+        product2.setProductName("Mouse");
+        product2.setProductQuantity(5);
+        productRepository.create(product2);
+
+        Product product3 = new Product();
+        product3.setProductId("003");
+        product3.setProductName("Keyboard");
+        product3.setProductQuantity(7);
+        productRepository.create(product3);
+
+        Product updatedProduct2 = new Product();
+        updatedProduct2.setProductId("002");
+        updatedProduct2.setProductName("Wireless Mouse");
+        updatedProduct2.setProductQuantity(8);
+
+        productRepository.update(updatedProduct2);
+
+        Optional<Product> foundProduct2 = productRepository.findById("002");
+        assertTrue(foundProduct2.isPresent());
+        assertEquals("Wireless Mouse", foundProduct2.get().getProductName());
+        assertEquals(8, foundProduct2.get().getProductQuantity());
+
+        Optional<Product> foundProduct1 = productRepository.findById("001");
+        Optional<Product> foundProduct3 = productRepository.findById("003");
+
+        assertTrue(foundProduct1.isPresent());
+        assertEquals("Laptop", foundProduct1.get().getProductName());
+
+        assertTrue(foundProduct3.isPresent());
+        assertEquals("Keyboard", foundProduct3.get().getProductName());
     }
 }
