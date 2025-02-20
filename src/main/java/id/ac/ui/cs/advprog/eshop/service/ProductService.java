@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    public Product create(Product product);
-    public List<Product> findAll();
-    public Optional<Product> findById(String productId);
-    public void deleteById(String productId);
-    public void update(Product product);
+    Product create(Product product);
+    List<Product> findAll();
+    Optional<Product> findById(String productId);
+    void deleteById(String productId);
+    void update(Product product);
 }
