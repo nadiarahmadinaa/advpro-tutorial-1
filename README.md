@@ -1,3 +1,5 @@
+Deployment Link: [Live Site](https://unaware-sharron-advprog-deploy-86f0599a.koyeb.app/)
+
 # Refleksi 1
 Dari segi clean code, saya sudah menerapkan beberapa hal berikut:
 - Meaningful names: nama-nama seperti untuk variabel dan function sudah cukup jelas dan mewakili.
