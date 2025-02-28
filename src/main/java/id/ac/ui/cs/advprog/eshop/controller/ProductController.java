@@ -2,21 +2,18 @@ package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Car;
 import id.ac.ui.cs.advprog.eshop.model.Product;
-import id.ac.ui.cs.advprog.eshop.service.CarService;
-import id.ac.ui.cs.advprog.eshop.service.ProductService;
+import id.ac.ui.cs.advprog.eshop.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private GenericService<Product> productService;
 
     @GetMapping("/create")
     public String createProductPage(Model model) {
@@ -62,7 +59,7 @@ public class ProductController {
 class CarController extends ProductController{
 
     @Autowired
-    private CarService carService;
+    private GenericService<Car> carService;
 
     @GetMapping("/createCar")
     public String createCarPage(Model model) {
