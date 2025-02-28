@@ -18,7 +18,7 @@ public class CarServiceImpl implements GenericService<Car> {
 
     @Override
     public Car create(Car car) {
-        return carRepository.createCar(car);
+        return carRepository.create(car);
     }
 
     @Override

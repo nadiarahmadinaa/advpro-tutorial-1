@@ -39,6 +39,6 @@ public class ProductServiceImpl implements GenericService<Product> {
 
     @Override
     public void deleteById(String id) {
-        productRepository.deleteById(id);
+        productRepository.delete(id);
     }
 }
