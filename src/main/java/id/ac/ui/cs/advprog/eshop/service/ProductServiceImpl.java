@@ -4,43 +4,41 @@ import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+    private final ProductRepository productRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @Override
     public Product create(Product product) {
-        productRepository.create(product);
-        return product;
+        return productRepository.create(product);
     }
 
     @Override
     public List<Product> findAll() {
-        Iterator<Product> productIterator = productRepository.findAll();
-        List<Product> allProducts = new ArrayList<>();
-        productIterator.forEachRemaining(allProducts::add);
-        return allProducts;
+        List<Product> products = new ArrayList<>();
+        productRepository.findAll().forEachRemaining(products::add);
+        return products;
     }
 
     @Override
-    public Optional<Product> findById(String productId) {
-        return productRepository.findById(productId);
+    public Optional<Product> findById(String id) {
+        return productRepository.findById(id);
     }
 
     @Override
-    public void deleteById(String productId) {
-        productRepository.deleteById(productId);
+    public void update(String id, Product product) {
+        productRepository.update(id, product);
     }
 
-    public void update(Product product) {
-        productRepository.update(product);
+    @Override
+    public void deleteById(String id) {
+        productRepository.deleteById(id);
     }
 }
