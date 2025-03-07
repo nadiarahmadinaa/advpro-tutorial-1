@@ -4,10 +4,12 @@ import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
+import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +22,11 @@ class PaymentServiceImplTest {
     @BeforeEach
     void setUp() {
         paymentService = new PaymentServiceImpl(new PaymentRepository());
-        mockOrder = new Order("12345", null, 1708560000L, "Customer");
+
+        ArrayList<Product> sampleProducts = new ArrayList<>();
+        sampleProducts.add(new Product("P001", "Sample Product", 10000));
+
+        mockOrder = new Order("12345", sampleProducts, 1708560000L, "Customer");
     }
 
     @Test
