@@ -41,7 +41,7 @@ public class ProductControllerTest {
     @Test
     void testCreateProductPost() {
         Product product = new Product();
-        String view = productController.createProductPost(product, model);
+        String view = productController.createProductPost(product);
         verify(productService).create(product);
         assertEquals("redirect:list", view);
     }
@@ -84,7 +84,7 @@ public class ProductControllerTest {
     void testEditProductPost() {
         Product product = new Product();
         String view = productController.editProductPost(product);
-        verify(productService).update(product);
+        verify(productService).update(product.getProductId(), product);
         assertEquals("redirect:/product/list", view);
     }
 }

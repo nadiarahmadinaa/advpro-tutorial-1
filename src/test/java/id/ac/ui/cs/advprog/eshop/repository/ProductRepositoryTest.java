@@ -104,7 +104,7 @@ public class ProductRepositoryTest {
         updatedProduct.setProductName("Updated Tablet");
         updatedProduct.setProductQuantity(20);
 
-        productRepository.update(updatedProduct);
+        productRepository.update("789", updatedProduct);
 
         Optional<Product> foundProduct = productRepository.findById("789");
 
@@ -120,7 +120,7 @@ public class ProductRepositoryTest {
         updatedProduct.setProductName("Non-existent");
         updatedProduct.setProductQuantity(10);
 
-        productRepository.update(updatedProduct);
+        productRepository.update("999", updatedProduct);
 
         Optional<Product> foundProduct = productRepository.findById("999");
         assertFalse(foundProduct.isPresent());
@@ -134,7 +134,7 @@ public class ProductRepositoryTest {
         product.setProductQuantity(8);
         productRepository.create(product);
 
-        productRepository.deleteById("101");
+        productRepository.delete("101");
 
         Optional<Product> foundProduct = productRepository.findById("101");
         assertFalse(foundProduct.isPresent());
@@ -142,7 +142,7 @@ public class ProductRepositoryTest {
 
     @Test
     void testDeleteProduct_Failure_ProductNotFound() {
-        productRepository.deleteById("999");
+        productRepository.delete("999");
         assertFalse(productRepository.findById("999").isPresent());
     }
 
@@ -171,7 +171,7 @@ public class ProductRepositoryTest {
         updatedProduct2.setProductName("Wireless Mouse");
         updatedProduct2.setProductQuantity(8);
 
-        productRepository.update(updatedProduct2);
+        productRepository.update("002", updatedProduct2);
 
         Optional<Product> foundProduct2 = productRepository.findById("002");
         assertTrue(foundProduct2.isPresent());

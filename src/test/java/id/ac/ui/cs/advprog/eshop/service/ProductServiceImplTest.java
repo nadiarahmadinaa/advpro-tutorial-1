@@ -69,7 +69,7 @@ public class ProductServiceImplTest {
     @Test
     void testDeleteById() {
         productService.deleteById("123");
-        verify(productRepository).deleteById("123");
+        verify(productRepository).delete("123");
     }
 
     @Test
@@ -77,8 +77,8 @@ public class ProductServiceImplTest {
         Product product = new Product();
         product.setProductId("456");
 
-        productService.update(product);
+        productService.update(product.getProductId(), product);
 
-        verify(productRepository).update(product);
+        verify(productRepository).update(product.getProductId(), product);
     }
 }
