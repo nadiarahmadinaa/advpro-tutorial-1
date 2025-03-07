@@ -57,7 +57,7 @@ Hal ini membantu integration karena jika unit test gagal, maka branch tidak dapa
 Secara deployment, github ini telah terhubung ke koyeb sehingga akan auto deploy setiap terdapat changes di main. Hal ini memastikan bahwa changes yang sudah lolos tes
 akan dapat disediakan ke pengguna dengan cepat dan efisien, menghindari kesalahan deployment.
 </details>
-<details open>
+<details>
 <summary>Modul 3</summary>
 
 
@@ -90,6 +90,27 @@ Seperti halnya mengubah tampilan UI dapat mengubah logika bisnis, dan mengubah c
 merusak sistem ketika menambahkan atau memperbaiki fitur. Dalam hal pengguna, akan sulit apabila ingin dibuat segmentasi seperti
 user privileges, dan harus mengubah codebase secara signifikan lagi. Selain mengubah codebase, perubahan yang ingin dibuat juga dapat
 mempengaruhi database, sehingga membuat proses maintenance atau penambahan fitur menjadi lama.
+</details>
+<details open>
+<summary>Modul 4</summary>
+
+## Refleksi 1
+#### Menurut evaluasi Percival (2017), berikut refleksi saya:
+Secara umum, saya merasa bahwa TDD berguna dan bermanfaat. Dengan menulis tes terlebih dahulu, saya dapat lebih fokus pada fungsionalitas yang ingin dicapai sebelum mengimplementasikan kode. 
+
+- Correctness: Kode saya secara garis besar sudah mencakup happy dan unhappy cases. Namun, memang tidak semua edge case telah direview dan dituangkan dalam bentuk tests.
+- Maintainability: Dalam hal maintainability, tests yang saya miliki terenkapsulasi ke masing-masing class, sehingga menjaga readibility kode. Saya telah membuat beberapa tests yang terhubung ke object lain sehingga integrasi dapat terlihat dan teruji secara garis
+besar. Meskipun demikian, memang perlu untuk membuat integration tests lain untuk memastikan kelancaran program.
+- Productive Workflow: Tests dalam kode saya sudah efektif dan efisien dalam hal kecepatan. Tests tidak membutuhkan waktu lama untuk dijalankan
+dan bersifat ringkas, tanpa banyak pengulangan yang tidak berguna.
+
+## Refleksi 2
+Refleksi berdasarkan prinsip F.I.R.S.T.:
+- Fast: Tests yang saya miliki sudah berjalan dengan cepat dan optimal. Tidak terdapat pengulangan yang tidak bermakna, sehingga tests yang dibuat sudah ringkas.
+- Independent: Secara umum, tests dilakukan per unit, sehingga terenkapsulasi. Meskipun demikian, terdapat beberapa tests yang menggunakan objek lain untuk memastikan jalannya integrasi program.
+- Repeatable: Tests dapat dijalankan berulang kali dengan hasil yang konsisten.
+- Self-validating: Semua tes sudah memberikan hasil yang jelas, dengan penggunaan assert.
+- Timely: Tests seluruhnya ditulis sebelum implementasi kode, sehingga bersifat timely. Namun terdapat beberapa tests yang diperbaiki setelah terjadi refactoring pada kode.
 </details>
 
 
